@@ -55,7 +55,33 @@ class MiniExtroversionTest(Eval):
 
         return score / 7
 
+class MBTI_Extroversion(Eval):
+    def get_questions(self) -> list[tuple[str, list[str]]]:
+        
+        return [
+            ("At a party do you:\n  1. Interact with many, including strangers\n    2.Interact with a few, known to you\n", ['1', '2']),
+            ("At parties do you:\n	1. Stay late, with increasing energy\n	2. Leave early with decreased energy\n", ['1', '2']),
+            ("In your social groups do you:\n	1. Keep abreast of other's happenings\n 2. Get behind on the news\n", ['1', '2']),
+            ("In phoning do you:\n	1. Rarely question that it will all be said\n	2. Rehearse what you'll say\n", ['1', '2']),
+            ("In company do you:\n  1. initiate conversation\n	2. wait to be approached\n", ['1', '2']),
+            ("Does new and non-routine interaction with others:\n	1. stimulate and energize you\n	2. tax your reserves\n", ['1', '2']),
+            ("Do you prefer:\n	1. many friends with brief contact\n	2. a few friends with more lengthy contact\n", ['1', '2']),
+            ("Do you:\n	1. speak easily and at length with strangers\n	2. find little to say to strangers\n", ['1', '2']),
+            ("When the phone rings do you:\n	1. hasten to get to it first\n	2. hope someone else will answer\n", ['1', '2']),
+            ("Are you more inclined to be:\n	1. easy to approach\n	2. somewhat reserved\n", ['1', '2'])
+        ]
+
+    def evaluate(self, answers: list[str]):
+        '''
+        Evaluates the answers to the mini personality test.
+        '''
+
+        return answers.count('1') / 10
+
+
+
 
 tests_dict = {
-    'MiniExtroversionTest': MiniExtroversionTest
-}
+    'MiniExtroversionTest': MiniExtroversionTest,
+    'MBTI_Extroversion': MBTI_Extroversion
+    }
