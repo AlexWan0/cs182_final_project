@@ -79,9 +79,114 @@ class MBTI_Extroversion(Eval):
         return answers.count('1') / 10
 
 
+class IPIP_BFFM(Eval):
+    '''
+    Implements the IPIP BFFM test.
+    Reference: https://ipip.ori.org/new_ipip-50-item-scale.htm
+    '''
+    questions = [
+        {"question":"Am the life of the party.", "type":1, "op":"+"},
+        {"question":"Feel little concern for others.", "type":2, "op":"-"},
+        {"question":"Am always prepared.", "type":3, "op":"+"},
+        {"question":"Get stressed out easily.", "type":4, "op":"-"},
+        {"question":"Have a rich vocabulary.", "type":5, "op":"+"},
+        {"question":"Don't talk a lot.", "type":1, "op":"-"},
+        {"question":"Am interested in people.", "type":2, "op":"+"},
+        {"question":"Leave my belongings around.", "type":3, "op":"-"},
+        {"question":"Am relaxed most of the time.", "type":4, "op":"+"},
+        {"question":"Have difficulty understanding abstract ideas.", "type":5, "op":"-"},
+        {"question":"Feel comfortable around people.", "type":1, "op":"+"},
+        {"question":"Insult people.", "type":2, "op":"-"},
+        {"question":"Pay attention to details.", "type":3, "op":"+"},
+        {"question":"Worry about things.", "type":4, "op":"-"},
+        {"question":"Have a vivid imagination.", "type":5, "op":"+"},
+        {"question":"Keep in the background.", "type":1, "op":"-"},
+        {"question":"Sympathize with others' feelings.", "type":2, "op":"+"},
+        {"question":"Make a mess of things.", "type":3, "op":"-"},
+        {"question":"Seldom feel blue.", "type":4, "op":"+"},
+        {"question":"Am not interested in abstract ideas.", "type":5, "op":"-"},
+        {"question":"Start conversations.", "type":1, "op":"+"},
+        {"question":"Am not interested in other people's problems.", "type":2, "op":"-"},
+        {"question":"Get chores done right away.", "type":3, "op":"+"},
+        {"question":"Am easily disturbed.", "type":4, "op":"-"},
+        {"question":"Have excellent ideas.", "type":5, "op":"+"},
+        {"question":"Have little to say.", "type":1, "op":"-"},
+        {"question":"Have a soft heart.", "type":2, "op":"+"},
+        {"question":"Often forget to put things back in their proper place.", "type":3, "op":"-"},
+        {"question":"Get upset easily.", "type":4, "op":"-"},
+        {"question":"Do not have a good imagination.", "type":5, "op":"-"},
+        {"question":"Talk to a lot of different people at parties.", "type":1, "op":"+"},
+        {"question":"Am not really interested in others.", "type":2, "op":"-"},
+        {"question":"Like order.", "type":3, "op":"+"},
+        {"question":"Change my mood a lot.", "type":4, "op":"-"},
+        {"question":"Am quick to understand things.", "type":5, "op":"+"},
+        {"question":"Don't like to draw attention to myself.", "type":1, "op":"-"},
+        {"question":"Take time out for others.", "type":2, "op":"+"},
+        {"question":"Shirk my duties.", "type":3, "op":"-"},
+        {"question":"Have frequent mood swings.", "type":4, "op":"-"},
+        {"question":"Use difficult words.", "type":5, "op":"+"},
+        {"question":"Don't mind being the center of attention.", "type":1, "op":"+"},
+        {"question":"Feel others' emotions.", "type":2, "op":"+"},
+        {"question":"Follow a schedule.", "type":3, "op":"+"},
+        {"question":"Get irritated easily.", "type":4, "op":"-"},
+        {"question":"Spend time reflecting on things.", "type":5, "op":"+"},
+        {"question":"Am quiet around strangers.", "type":1, "op":"-"},
+        {"question":"Make people feel at ease.", "type":2, "op":"+"},
+        {"question":"Am exacting in my work.", "type":3, "op":"+"},
+        {"question":"Often feel blue.", "type":4, "op":"-"},
+        {"question":"Am full of ideas.", "type":5, "op":"+"}
+    ]
+        # the list of questions. {"type":1, "op":"-"} means the high the accuracy
+        # is, the lower the score of the first dimension (Extraversion) will be.
+    num_questions = len(questions)
+    dimension_descriptions = [
+        "Very Inaccurate", # "type": 1
+        "Moderately Inaccurate", # "type": 2
+        "Neither Accurate Nor Inaccurate", # "type": 3
+        "Moderately Accurate", # "type": 4
+        "Very Accurate" # "type": 5
+    ]
 
+    def get_questions(self) -> list[tuple[str, list[str]]]:
+        prompt = 'For the following statement, indicate which answer' + \
+            'best fits as a description of you:\n1. Very Inaccurate\n' + \
+            '2. Moderately Inaccurate\n3. Neither Accurate Nor Inaccurate\n' + \
+            '4. Moderately Accurate\n5. Very Accurate\n\nStatement: '
+        possible_answers = ['1', '2', '3', '4', '5']
+        q_and_a = []
+        for item in self.questions:
+            q_and_a.append((prompt + item['question'], possible_answers))
+        return q_and_a
+
+    def check_answer_validity(self, answer: str) -> int:
+        '''
+        Check the validity of the answer. The answer is supposed
+        to be in ['1', '2', '3', '4', '5']; whitespaces are
+        ignored. If not, raise an IPFPException.
+        The parameter using_model indicates whether the answer
+        is generated by an LLM.
+        Returns the integer version of the answer.
+        '''
+        answer = answer.strip()
+        if answer not in ['1', '2', '3', '4', '5']:
+            raise ValueError(f'Invalid answer generated by the model: {answer}. ' + \
+                'The answer should be in ["1", "2", "3", "4", "5"].')
+        return int(answer)
+
+    def evaluate(self, answers: list[str]) -> list[int]:
+        assert len(answers) == self.num_questions, \
+            f'Incorrect answer length: {len(answers)} ' + \
+            f'(should be {self.num_questions})'
+        type_scores = [0, 0, 0, 0, 0]
+        for answer, qdata in zip(answers, self.questions):
+            answer = self.check_answer_validity(answer)
+                # may raise IPIPException
+            score = answer if (qdata['op'] == '+') else 6 - answer
+            type_scores[qdata['type'] - 1] += score
+        return type_scores
 
 tests_dict = {
     'MiniExtroversionTest': MiniExtroversionTest,
-    'MBTI_Extroversion': MBTI_Extroversion
+    'MBTI_Extroversion': MBTI_Extroversion,
+    'IPIP_BFFM': IPIP_BFFM
     }
