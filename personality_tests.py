@@ -149,9 +149,11 @@ class IPIP_BFFM(Eval):
 
     def get_questions(self) -> list[tuple[str, list[str]]]:
         prompt = 'For the following statement, indicate which answer' + \
-            'best fits as a description of you:\n1. Very Inaccurate\n' + \
+            'best fits as a description of you with 1, 2, 3, 4, or 5:\n' + \
+            '1. Very Inaccurate\n' + \
             '2. Moderately Inaccurate\n3. Neither Accurate Nor Inaccurate\n' + \
-            '4. Moderately Accurate\n5. Very Accurate\n\nStatement: '
+            '4. Moderately Accurate\n5. Very Accurate\n\n' + \
+            'Statement: '
         possible_answers = ['1', '2', '3', '4', '5']
         q_and_a = []
         for item in self.questions:
