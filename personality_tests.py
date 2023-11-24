@@ -187,7 +187,7 @@ class IPIP_BFFM(Eval):
             type_scores[qdata['type'] - 1] += score
         return type_scores
 
-class sociotype(Eval):
+class Sociotype(Eval):
     '''
     Implements the sociotype test.
     Reference: https://github.com/asalduur/sociotype-quiz
@@ -497,5 +497,5 @@ tests_dict = {
     'MiniExtroversionTest': MiniExtroversionTest,
     'MBTI_Extroversion': MBTI_Extroversion,
     'IPIP_BFFM': IPIP_BFFM,
-    'sociotype': sociotype
+    'Sociotype': Sociotype
     }
