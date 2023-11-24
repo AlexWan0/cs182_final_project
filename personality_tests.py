@@ -187,8 +187,167 @@ class IPIP_BFFM(Eval):
             type_scores[qdata['type'] - 1] += score
         return type_scores
 
+class sociotype(Eval):
+    '''
+    Implements the sociotype test.
+    Reference: https://github.com/asalduur/sociotype-quiz
+    '''
+    questions = [{
+        "RATQ1":
+        "QUESTION ONE\nPlease enter 'a' if the first statement is mostly true, or 'b' if the second statement is mostly true.\n   a. I'm consistent and reliable, but not flexible enough.\n   b. I'm flexible and changeable, but lack consistency."
+    }, {
+        "RATQ2":
+        "QUESTION TWO\nPlease enter 'a' if the first statement is mostly true, or 'b' if the second statement is mostly true.\n   a. A bad mood has little impact on my productivity.\n   b. I'm strongly dependent on my internal biorhythms."
+    }, {
+        "RATQ3":
+        "QUESTION THREE\nPlease enter 'a' if the first statement is mostly true, or 'b' if the second statement is mostly true.\n   a. I do not start something new until I've finished the previous task.\n   b. Usually, I start several projects at once."
+    }, {
+        "EXTQ1":
+        "QUESTION FOUR\nPlease enter 'a' if the first statement is mostly true, or 'b' if the second statement is mostly true.\n   a. I am an open person.\n   b. I am a reserved person."
+    }, {
+        "EXTQ2":
+        "QUESTION FIVE\nPlease enter 'a' if the first statement is mostly true, or 'b' if the second statement is mostly true.\n   a. Contacts with strangers do not bother me.\n   b. Contacts with strangers require effort."
+    }, {
+        "EXTQ3":
+        "QUESTION SIX\nPlease enter 'a' if the first statement is mostly true, or 'b' if the second statement is mostly true.\n   a. It is easier for me to understand others than myself.\n   b. It is easier for me to understand myself than others."
+    }, {
+        "SENQ1":
+        "QUESTION SEVEN\nPlease enter 'a' if the first statement is mostly true, or 'b' if the second statement is mostly true.\n   a. If nothing is clear, I actively collect information\n   b. If nothing is clear, I rely on my intuition."
+    }, {
+        "SENQ2":
+        "QUESTION EIGHT\nPlease enter 'a' if the first statement is mostly true, or 'b' if the second statement is mostly true.\n   a. I see everything that happens around me.\n   b. I see only what I attach importance to."
+    }, {
+        "SENQ3":
+        "QUESTION NINE\nPlease enter 'a' if the first statement is mostly true, or 'b' if the second statement is mostly true.\n   a. I see better ways of achieving a goal.\n   b. I see a goal better than the ways to achieve it."
+    }, {
+        "LOGQ1":
+        "QUESTION TEN\nPlease enter 'a' if the first statement is mostly true, or 'b' if the second statement is mostly true.\n   a. I live more by reason than by heart.\n   b. I live more with my heart than with my mind."
+    }, {
+        "LOGQ2":
+        "QUESTION ELEVEN\nPlease enter 'a' if the first statement is mostly true, or 'b' if the second statement is mostly true.\n   a. I react more to the content of the conversation.\n   b. I am very responsive to the intonation of the speaker."
+    }, {
+        "LOGQ3":
+        "QUESTION TWELVE\nPlease enter 'a' if the first statement is mostly true, or 'b' if the second statement is mostly true.\n   a. It is better to prove than to persuade.\n   b. It is better to persuade than to prove."
+    }, {
+        "RATEX":
+        "The following questions will aim to sort you into one of the 4 Jungian dichotomies, rationality and irrationality.\nThe former bases judgement on actions and truths while the latter is governed by perceptions of the mind and body."
+    }, {
+        "EXTEX":
+        "These next questions will see where on the extroversion and introversion spectrum you lean more towards."
+    }, {
+        "SENEX":
+        "The sensing vs intuition dichotomy are understood as mental processes where sensing types focus on experience with the concrete and tangible, whereas intuitive types are receptive of the intangible details of reality, say for instance time/trend."
+    }, {
+        "LOGEX":
+        "The next questions will sort based on the final Jungian dichotomy, logic vs ethics, rational judgement involving inanimate objects and systems ('right or wrong') and rational judgement involving interpersonal relations ('good or evil')."
+    }]
+
+    def get_questions(self) -> list[tuple[str, list[str]]]:
+        options = ['a', 'b']
+        QNA = []
+        for item in self.questions:
+            QNA.append(next(iter(item.values())), options)
+
+    def evaluate(self, answers: list[str]):
+        socio = [0, 0, 0, 0]
+
+        rat_count = 0
+        irrat_count = 0
+        for answer in answers[:3]:
+            if answer == "a":
+                rat_count += 1
+            else:
+                irrat_count += 1
+        if irrat_count > rat_count:
+            socio[0] = 1
+
+        extro_count = 0
+        intro_count = 0
+        for answer in answers[3:6]:
+            if answer == "a":
+                extro_count += 1
+            else:
+                intro_count += 1
+        if intro_count > extro_count:
+            socio[1] = 1
+
+        sen_count = 0
+        intui_count = 0
+        for answer in answers[6:9]:
+            if answer == "a":
+                sen_count += 1
+            else:
+                intui_count += 1
+        if intui_count > sen_count:
+            socio[2] = 1
+
+        log_count = 0
+        eth_count = 0
+        for answer in answers[9:12]:
+            if answer == "a":
+                log_count += 1
+            else:
+                eth_count += 1
+        if eth_count > log_count:
+            socio[3] = 1
+
+        return socio
+
+    def get_sociotype(socio):
+        """ Loops through sociotype dictionary to find user match """
+    
+        sociotype = {
+            "ESE": [0,0,0,1],
+            "LII": [0,1,1,0],
+            "ILE": [1,0,1,0],
+            "SEI": [1,1,0,1],
+            "EIE": [0,0,1,1],
+            "LSI": [0,1,0,0],
+            "SLE": [1,0,0,0],
+            "IEI": [1,1,1,1],
+            "LIE": [0,0,1,0],
+            "ESI": [0,1,0,1],
+            "SEE": [1,0,0,1],
+            "ILI": [1,1,1,0],
+            "IEE": [1,0,1,1],
+            "SLI": [1,1,0,0],
+            "LSE": [0,0,0,0],
+            "EII": [0,1,1,1]
+        }
+        
+        for personality in sociotype:
+            if sociotype[personality] == socio:
+                return personality
+    
+    def type_blurb(personality):
+        """ Parses through dictionary of type and prints user a blurb about their type """
+        
+        type_and_blurb = {
+            "ESE": (ESE),
+            "LII": (LII),
+            "ILE": (ILE),
+            "SEI": (SEI),
+            "EIE": (EIE),
+            "LSI": (LSI),
+            "SLE": (SLE),
+            "IEI": (IEI),
+            "LIE": (LIE),
+            "ESI": (ESI),
+            "SEE": (SEE),
+            "ILI": (ILI),
+            "IEE": (IEE),
+            "SLI": (SLI),
+            "LSE": (LSE),
+            "EII": (EII)
+        }
+        
+        for key in type_and_blurb:
+            if key == personality:
+                print(type_and_blurb[key])
+                
 tests_dict = {
     'MiniExtroversionTest': MiniExtroversionTest,
     'MBTI_Extroversion': MBTI_Extroversion,
     'IPIP_BFFM': IPIP_BFFM
+    'sociotype': sociotype
     }
