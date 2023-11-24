@@ -496,6 +496,6 @@ class sociotype(Eval):
 tests_dict = {
     'MiniExtroversionTest': MiniExtroversionTest,
     'MBTI_Extroversion': MBTI_Extroversion,
-    'IPIP_BFFM': IPIP_BFFM
+    'IPIP_BFFM': IPIP_BFFM,
     'sociotype': sociotype
     }
