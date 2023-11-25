@@ -1,5 +1,6 @@
 from datasets import load_dataset
-
+import pandas as pd
+import glob
 
 class RawData():
     '''
@@ -73,8 +74,35 @@ class CommentData(RawData):
     def get_test_data(self):
         return self.comments['test']['text']
 
+class RedditData(RawData):
+    def __init__(self, test_size=0.2, val_size=0.1):
+        # https://www.kaggle.com/datasets/mexwell/reddit-comment-and-thread
+        # there are datasets of comments from different kinds of topics on Reddit
+        # firstly combine all the data and then split the data
+        reddit_data = glob.glob('*.csv')
+        combined_df = pd.concat([pd.read_csv(f) for f in files], ignore_index=True)
+        combined_df.to_csv('reddit_comment.csv', index=False)
+        train_val_df, test_df = train_test_split(combined_df, test_size=test_size, random_state=42)
+        train_df, val_df = train_test_split(train_val_df, test_size=val_size/(1-test_size), random_state=42)
+        train_df.to_csv('reddit_train_dataset.csv', index=False)
+        val_df.to_csv('reddit_validation_dataset.csv', index=False)
+        test_df.to_csv('reddit_test_dataset.csv', index=False)
+        self.train_data = train_df
+        self.validation_data = val_df
+        self.test_data = test_df
+        
+    def get_train_data(self):
+        return self.train_data['text'].tolist()
+
+    def get_validation_data(self):
+        return self.validation_data['text'].tolist()
+
+    def get_test_data(self):
+        return self.test_data['text'].tolist()
+
 dataset_classes: dict[str, RawData] = {
     'TweetData': TweetData,
     'NewsData': NewsData,
-    'CommentData': CommentData
+    'CommentData': CommentData,
+    'RedditData': RedditData
 }
