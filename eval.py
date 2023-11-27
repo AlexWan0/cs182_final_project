@@ -56,7 +56,9 @@ prompts = {
 }
 
 tests = [
-    'MiniExtroversionTest'
+    # 'MiniExtroversionTest',
+    # 'IPIP_BFFM'
+    'MBTI_Extroversion'
 ]
 
 paths = [

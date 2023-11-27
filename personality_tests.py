@@ -242,159 +242,12 @@ class Sociotype(Eval):
         "The next questions will sort based on the final Jungian dichotomy, logic vs ethics, rational judgement involving inanimate objects and systems ('right or wrong') and rational judgement involving interpersonal relations ('good or evil')."
     }]
 
-    ESE = """
-                                        YOU ARE...
-    
-                                                    E S E
-                                                4D Fe | 3D Si
-                                                1D Ni | 2D Te
-                                                2D Ne | 1D Ti
-                                                3D Fi | 4D Se
-        ESEs, with strong extraverted ethics (Fe), are lively, animated, and are skilled at creating emotional ambience and energizing others wherever they go. They are highly intuned with their inner homeostasis and love creating comfort for themselves and those around them due to favoring introverted sensing (Si). They tend to have a good eye for aesthetics and enjoy organizing events for loved ones.
-        """
-    LII = """
-                                        YOU ARE...
-    
-                                                    LII
-                                                4D Ti | 3D Ne
-                                                1D Se | 2D Fi
-                                                2D Si | 1D Fe
-                                                3D Te | 4D Ni
-        LIIs are known to be the strong analytical types due to their 4 dimensional introverted thinking (Ti). They are usually able to understand abstract systems and conceptualize, compartmentalize them. If they could be left to think and research for a living, they would reach self-actualization. With extroverted intuition (Ne), they are able to see the big picture and ways of realizing their ideas.
-        """
-    ILE = """
-                                        YOU ARE...
-    
-                                                    ILE
-                                                4D Ne | 3D Ti
-                                                1D Fi | 2D Se
-                                                2D Fe | 1D Si
-                                                3D Ni | 4D Te
-        ILEs are creative thinkers who love ideas purely for their unlimited 
-        """
-    SEI = """
-                                        YOU ARE...
-    
-                                                    SEI
-                                                4D Si | 3D Fe
-                                                1D Te | 2D Ni
-                                                2D Ti | 1D Ne
-                                                3D Se | 4D Fi
-        """
-    EIE = """
-                                        YOU ARE...
-    
-                                                    EIE
-                                                4D Fe | 3D Ni
-                                                1D Si | 2D Te
-                                                2D Se | 1D Ti
-                                                3D Fi | 4D Ne
-        """
-    LSI = """
-                                        YOU ARE...
-    
-                                                    LSI
-                                                4D Ti | 3D Se
-                                                1D Ne | 2D Fi
-                                                2D Ni | 1D Fe
-                                                3D Te | 4D Si
-        """
-    SLE = """
-                                        YOU ARE...
-    
-                                                    SLE
-                                                4D Se | 3D Ti
-                                                1D Fi | 2D Ne
-                                                2D Fe | 1D Ni
-                                                3D Si | 4D Te
-        """
-    IEI = """
-                                        YOU ARE...
-    
-                                                    IEI
-                                                4D Ni | 3D Fe
-                                                1D Te | 2D Si
-                                                2D Ti | 1D Se
-                                                3D Ne | 4D Fi
-        """
-    LIE = """
-                                        YOU ARE...
-    
-                                                    LIE
-                                                4D Te | 3D Ni
-                                                1D Si | 2D Fe
-                                                2D Se | 1D Fi
-                                                3D Ti | 4D Ne
-        """
-    ESI = """
-                                        YOU ARE...
-    
-                                                    ESI
-                                                4D Fi | 3D Se
-                                                1D Ne | 2D Ti
-                                                2D Ni | 1D Te
-                                                3D Fe | 4D Si
-        """
-    SEE = """
-                                        YOU ARE...
-    
-                                                    SEE
-                                                4D Se | 3D Fi
-                                                1D Ti | 2D Ne
-                                                2D Te | 1D Ni
-                                                3D Si | 4D Fe
-        """
-    ILI = """
-                                        YOU ARE...
-    
-                                                    ILI
-                                                4D Ni | 3D Te
-                                                1D Fe | 2D Si
-                                                2D Fi | 1D Se
-                                                3D Ne | 4D Ti
-        """
-    IEE = """
-                                        YOU ARE...
-    
-                                                    IEE
-                                                4D Ne | 3D Fi
-                                                1D Ti | 2D Se
-                                                2D Te | 1D Si
-                                                3D Ni | 4D Fe
-        """
-    SLI = """
-                                        YOU ARE...
-    
-                                                    SLI
-                                                4D Si | 3D Te
-                                                1D Fe | 2D Ni
-                                                2D Fi | 1D Ne
-                                                3D Se | 4D Ti
-        """
-    LSE = """
-                                        YOU ARE...
-    
-                                                    LSE
-                                                4D Te | 3D Si
-                                                1D Ni | 2D Fe
-                                                2D Ne | 1D Fi
-                                                3D Ti | 4D Se
-        """
-    EII = """
-                                        YOU ARE...
-    
-                                                    EII
-                                                4D Fi | 3D Ne
-                                                1D Se | 2D Ti
-                                                2D Si | 1D Te
-                                                3D Fe | 4D Ni
-        """
-
     def get_questions(self) -> list[tuple[str, list[str]]]:
         options = ['a', 'b']
         QNA = []
         for item in self.questions:
-            QNA.append(next(iter(item.values())), options)
+            QNA.append((next(iter(item.values())), options))
+        return QNA
 
     def evaluate(self, answers: list[str]):
         socio = [0, 0, 0, 0]
@@ -470,6 +323,155 @@ class Sociotype(Eval):
     def type_blurb(personality):
         """ Parses through dictionary of type and prints user a blurb about their type """
         
+
+        ESE = """
+                                            YOU ARE...
+        
+                                                        E S E
+                                                    4D Fe | 3D Si
+                                                    1D Ni | 2D Te
+                                                    2D Ne | 1D Ti
+                                                    3D Fi | 4D Se
+            ESEs, with strong extraverted ethics (Fe), are lively, animated, and are skilled at creating emotional ambience and energizing others wherever they go. They are highly intuned with their inner homeostasis and love creating comfort for themselves and those around them due to favoring introverted sensing (Si). They tend to have a good eye for aesthetics and enjoy organizing events for loved ones.
+            """
+        LII = """
+                                            YOU ARE...
+        
+                                                        LII
+                                                    4D Ti | 3D Ne
+                                                    1D Se | 2D Fi
+                                                    2D Si | 1D Fe
+                                                    3D Te | 4D Ni
+            LIIs are known to be the strong analytical types due to their 4 dimensional introverted thinking (Ti). They are usually able to understand abstract systems and conceptualize, compartmentalize them. If they could be left to think and research for a living, they would reach self-actualization. With extroverted intuition (Ne), they are able to see the big picture and ways of realizing their ideas.
+            """
+        ILE = """
+                                            YOU ARE...
+        
+                                                        ILE
+                                                    4D Ne | 3D Ti
+                                                    1D Fi | 2D Se
+                                                    2D Fe | 1D Si
+                                                    3D Ni | 4D Te
+            ILEs are creative thinkers who love ideas purely for their unlimited 
+            """
+        SEI = """
+                                            YOU ARE...
+        
+                                                        SEI
+                                                    4D Si | 3D Fe
+                                                    1D Te | 2D Ni
+                                                    2D Ti | 1D Ne
+                                                    3D Se | 4D Fi
+            """
+        EIE = """
+                                            YOU ARE...
+        
+                                                        EIE
+                                                    4D Fe | 3D Ni
+                                                    1D Si | 2D Te
+                                                    2D Se | 1D Ti
+                                                    3D Fi | 4D Ne
+            """
+        LSI = """
+                                            YOU ARE...
+        
+                                                        LSI
+                                                    4D Ti | 3D Se
+                                                    1D Ne | 2D Fi
+                                                    2D Ni | 1D Fe
+                                                    3D Te | 4D Si
+            """
+        SLE = """
+                                            YOU ARE...
+        
+                                                        SLE
+                                                    4D Se | 3D Ti
+                                                    1D Fi | 2D Ne
+                                                    2D Fe | 1D Ni
+                                                    3D Si | 4D Te
+            """
+        IEI = """
+                                            YOU ARE...
+        
+                                                        IEI
+                                                    4D Ni | 3D Fe
+                                                    1D Te | 2D Si
+                                                    2D Ti | 1D Se
+                                                    3D Ne | 4D Fi
+            """
+        LIE = """
+                                            YOU ARE...
+        
+                                                        LIE
+                                                    4D Te | 3D Ni
+                                                    1D Si | 2D Fe
+                                                    2D Se | 1D Fi
+                                                    3D Ti | 4D Ne
+            """
+        ESI = """
+                                            YOU ARE...
+        
+                                                        ESI
+                                                    4D Fi | 3D Se
+                                                    1D Ne | 2D Ti
+                                                    2D Ni | 1D Te
+                                                    3D Fe | 4D Si
+            """
+        SEE = """
+                                            YOU ARE...
+        
+                                                        SEE
+                                                    4D Se | 3D Fi
+                                                    1D Ti | 2D Ne
+                                                    2D Te | 1D Ni
+                                                    3D Si | 4D Fe
+            """
+        ILI = """
+                                            YOU ARE...
+        
+                                                        ILI
+                                                    4D Ni | 3D Te
+                                                    1D Fe | 2D Si
+                                                    2D Fi | 1D Se
+                                                    3D Ne | 4D Ti
+            """
+        IEE = """
+                                            YOU ARE...
+        
+                                                        IEE
+                                                    4D Ne | 3D Fi
+                                                    1D Ti | 2D Se
+                                                    2D Te | 1D Si
+                                                    3D Ni | 4D Fe
+            """
+        SLI = """
+                                            YOU ARE...
+        
+                                                        SLI
+                                                    4D Si | 3D Te
+                                                    1D Fe | 2D Ni
+                                                    2D Fi | 1D Ne
+                                                    3D Se | 4D Ti
+            """
+        LSE = """
+                                            YOU ARE...
+        
+                                                        LSE
+                                                    4D Te | 3D Si
+                                                    1D Ni | 2D Fe
+                                                    2D Ne | 1D Fi
+                                                    3D Ti | 4D Se
+            """
+        EII = """
+                                            YOU ARE...
+        
+                                                        EII
+                                                    4D Fi | 3D Ne
+                                                    1D Se | 2D Ti
+                                                    2D Si | 1D Te
+                                                    3D Fe | 4D Ni
+            """
+
         type_and_blurb = {
             "ESE": (ESE),
             "LII": (LII),

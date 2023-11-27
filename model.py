@@ -51,9 +51,12 @@ class StyleModel():
         if model_args.from_pretrained is not None:
             self.load_pretrained(model_args.from_pretrained)
             self.model.set_active_adapters(model_args.adapter_name)
-        else:
+        elif model_args.lora_r is not None and model_args.lora_alpha is not None:
             self.adapter_config = LoRAConfig(r=model_args.lora_r, alpha=model_args.lora_alpha)
             self.model.add_adapter(model_args.adapter_name, config=self.adapter_config, set_active=True)
+        else:
+            # don't use adapter
+            pass
 
         self.model.to(device)
 
@@ -158,7 +161,7 @@ if __name__ == '__main__':
             learning_rate=lr
         )
 
-        dataset_name = 'TweetData'
+        dataset_name = 'RedditData'
 
         model = StyleModel(
             model_args,

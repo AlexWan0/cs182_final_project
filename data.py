@@ -1,6 +1,7 @@
 from datasets import load_dataset
 import pandas as pd
 import glob
+from sklearn.model_selection import train_test_split
 
 class RawData():
     '''
@@ -75,30 +76,33 @@ class CommentData(RawData):
         return self.comments['test']['text']
 
 class RedditData(RawData):
-    def __init__(self, test_size=0.2, val_size=0.1):
+    def __init__(self, test_size=0.2, val_size=0.1, limit_n=20000):
         # https://www.kaggle.com/datasets/mexwell/reddit-comment-and-thread
         # there are datasets of comments from different kinds of topics on Reddit
         # firstly combine all the data and then split the data
-        reddit_data = glob.glob('*.csv')
+        files = glob.glob('data/*.csv')
         combined_df = pd.concat([pd.read_csv(f) for f in files], ignore_index=True)
-        combined_df.to_csv('reddit_comment.csv', index=False)
-        train_val_df, test_df = train_test_split(combined_df, test_size=test_size, random_state=42)
-        train_df, val_df = train_test_split(train_val_df, test_size=val_size/(1-test_size), random_state=42)
-        train_df.to_csv('reddit_train_dataset.csv', index=False)
-        val_df.to_csv('reddit_validation_dataset.csv', index=False)
-        test_df.to_csv('reddit_test_dataset.csv', index=False)
-        self.train_data = train_df
-        self.validation_data = val_df
-        self.test_data = test_df
+        text = combined_df['0'].tolist()
+
+        text = [x for x in text if isinstance(x, str)]
+
+        text = text[:limit_n]
+
+        train_val, test = train_test_split(text, test_size=test_size, random_state=42)
+        train, val = train_test_split(train_val, test_size=val_size/(1-test_size), random_state=42)
+
+        self.train_data = train
+        self.validation_data = val
+        self.test_data = test
         
     def get_train_data(self):
-        return self.train_data['text'].tolist()
+        return self.train_data
 
     def get_validation_data(self):
-        return self.validation_data['text'].tolist()
+        return self.validation_data
 
     def get_test_data(self):
-        return self.test_data['text'].tolist()
+        return self.test_data
 
 dataset_classes: dict[str, RawData] = {
     'TweetData': TweetData,
