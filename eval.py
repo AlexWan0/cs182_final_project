@@ -1,8 +1,12 @@
 from dataclasses import dataclass
 from itertools import product
+import glob
+import pandas as pd
+from tqdm import tqdm
 
 from model import ModelArgs, StyleModel
 from personality_tests import tests_dict
+from utils import parse_path
 
 
 @dataclass
@@ -57,30 +61,35 @@ prompts = {
 
 tests = [
     # 'MiniExtroversionTest',
-    # 'IPIP_BFFM'
-    'MBTI_Extroversion'
+    'IPIP_BFFM',
+    'Sociotype'
+    # 'MBTI_Extroversion'
 ]
 
-paths = [
-    'runs/gpt2_TweetData_16_8_10_8_0.0001/checkpoint-151/style_adapter',
-    'runs/gpt2_TweetData_8_8_10_8_5e-05/checkpoint-1510/style_adapter'
-]
+paths = glob.glob('runs/*/checkpoint-*/style_adapter')
 
 if __name__ == '__main__':
-    for path, test, prompt_name in product(paths, tests, prompts.keys()):
-        prompt = prompts[prompt_name]
+    results = []
 
-        model_args = ModelArgs(
-            model_name='gpt2',
-            is_mlm=False,
-            from_pretrained=path
-        )
+    total = len(paths) * len(tests) * len(prompts.keys())
 
-        eval_args = EvalArgs(
-            test_name=test,
-            prompt=prompt
-        )
+    with open('results.csv', 'w', buffering=1) as f:
+        for path, test, prompt_name in tqdm(product(paths, tests, prompts.keys()), total=total):
+            prompt = prompts[prompt_name]
 
-        score = run_ptest(model_args, eval_args)
+            model_args = ModelArgs(
+                model_name='gpt2',
+                is_mlm=False,
+                from_pretrained=path
+            )
 
-        print(f'{path}\t{test}\t{prompt_name}\t{score}\n')
+            eval_args = EvalArgs(
+                test_name=test,
+                prompt=prompt
+            )
+
+            score = run_ptest(model_args, eval_args)
+
+            print(f'{path}\t{test}\t{prompt_name}\t{score}\n')
+
+            f.write(f'{path}\t{test}\t{prompt_name}\t{str(score)}\n')

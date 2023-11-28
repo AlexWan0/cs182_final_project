@@ -29,3 +29,21 @@ def bgblue(text: str) -> str:
     '''
     return f'\033[44m\033[37m{text}\033[0m'
 
+def parse_path(path):
+    run_id, checkpoint_id = path.split('/')[1:3]
+    checkpoint_num = int(checkpoint_id.split('-')[1])
+    model_name, data, r, alpha, epochs, batch_size, lr = run_id.split('_')
+
+    # return {
+    #     'model_name': model_name,
+    #     'data': data,
+    #     'r': int(r),
+    #     'alpha': int(alpha),
+    #     'epochs': int(epochs),
+    #     'batch_size': int(batch_size),
+    #     'lr': float(lr),
+    #     'num_steps': int(checkpoint_num)
+    # }
+
+    return ('model_name', 'data', 'r', 'alpha', 'epochs', 'batch_size', 'lr', 'num_steps'), (model_name, data, int(r), int(alpha), int(epochs), int(batch_size), float(lr), int(checkpoint_num))
+
