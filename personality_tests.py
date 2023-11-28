@@ -56,27 +56,100 @@ class MiniExtroversionTest(Eval):
         return score / 7
 
 class MBTI_Extroversion(Eval):
+    '''
+    implements of the MBTI test.
+    reference: https://github.com/monsef-alahem/MBTI_personality_16_tester/blob/main/main.py
+    '''
     def get_questions(self) -> list[tuple[str, list[str]]]:
-        
         return [
-            ("At a party do you:\n  1. Interact with many, including strangers\n    2.Interact with a few, known to you\n", ['1', '2']),
-            ("At parties do you:\n	1. Stay late, with increasing energy\n	2. Leave early with decreased energy\n", ['1', '2']),
-            ("In your social groups do you:\n	1. Keep abreast of other's happenings\n 2. Get behind on the news\n", ['1', '2']),
-            ("In phoning do you:\n	1. Rarely question that it will all be said\n	2. Rehearse what you'll say\n", ['1', '2']),
-            ("In company do you:\n  1. initiate conversation\n	2. wait to be approached\n", ['1', '2']),
-            ("Does new and non-routine interaction with others:\n	1. stimulate and energize you\n	2. tax your reserves\n", ['1', '2']),
-            ("Do you prefer:\n	1. many friends with brief contact\n	2. a few friends with more lengthy contact\n", ['1', '2']),
-            ("Do you:\n	1. speak easily and at length with strangers\n	2. find little to say to strangers\n", ['1', '2']),
-            ("When the phone rings do you:\n	1. hasten to get to it first\n	2. hope someone else will answer\n", ['1', '2']),
-            ("Are you more inclined to be:\n	1. easy to approach\n	2. somewhat reserved\n", ['1', '2'])
+            ("1.At a party do you:\n	1. Interact with many, including strangers\n	2. Interact with a few, known to you\n",['1','2']),
+			("2. Are you more:\n	1. Realistic than speculative\n	2. Speculative than realistic\n",['1','2']),
+			("3. Is it worse to:\n	1. Have your “head in the clouds”\n	2.Be “in a rut”\n",['1','2']),
+			("4. Are you more impressed by:\n	1. Principles\n	2. Emotions\n",['1','2']),
+			("5. Are more drawn toward the:\n	1. Convincing\n	2. Touching\n",['1','2']),
+			("6. Do you prefer to work:\n	1. To deadlines\n	2. Just “whenever”\n",['1','2']),
+			("7. Do you tend to choose:\n	1. Rather carefully\n	2. Somewhat impulsively\n",['1','2']),
+			("8. At parties do you:\n	1. Stay late, with increasing energy\n	2. Leave early with decreased energy\n",['1','2']),
+			("9. Are you more attracted to:\n	1. Sensible people\n	2. Imaginative people\n",['1','2']),
+			("10. Are you more interested in:\n	1. What is actual\n	2. What is possible\n",['1','2']),
+			("11. In judging others are you more swayed by:\n	1. Laws than circumstances\n	2. Circumstances than laws\n",['1','2']),
+			("12. In approaching others is your inclination to be somewhat:\n	1. Objective\n	2. Personal\n",['1','2']),
+			("13. Are you more:\n	1. Punctual\n	2. Leisurely\n",['1','2']),
+			("14. Does it bother you more having things:\n	1. Incomplete\n	2. Completed\n",['1','2']),
+			("15. In your social groups do you:\n	1. Keep abreast of other's happenings\n	2. Get behind on the news\n",['1','2']),
+			("16. In doing ordinary things are you more likely to:\n	1. Do it the usual way\n	2. Do it your own way\n",['1','2']),
+			("17. Writers should:\n	1. “Say what they mean and mean what they say”\n	2. Express things more by use of analogy\n",['1','2']),
+			("18. Which appeals to you more:\n	1. Consistency of thought\n	2. Harmonious human relationships\n",['1','2']),
+			("19. Are you more comfortable in making:\n	1. Logical judgments\n	2. Value judgments\n",['1','2']),
+			("20. Do you want things:\n	1. Settled and decided\n	2. Unsettled and undecided\n",['1','2']),
+			("21. Would you say you are more:\n	1. Serious and determined\n	2. Easy-going\n",['1','2']),
+			("22. In phoning do you:\n	1. Rarely question that it will all be said\n	2. Rehearse what you'll say\n",['1','2']),
+			("23. Facts:\n	1. “Speak for themselves”\n	2. Illustrate principles\n",['1','2']),
+			("24. Are visionaries:\n	1. somewhat annoying\n	2. rather fascinating\n",['1','2']),
+			("25. Are you more often:\n	1. a cool-headed person\n	2. a warm-hearted person\n",['1','2']),
+			("26. Is it worse to be:\n	1. unjust\n	2. merciless\n",['1','2']),
+			("27. Should one usually let events occur:\n	1. by careful selection and choice\n	2. randomly and by chance\n",['1','2']),
+			("28. Do you feel better about:\n	1. having purchased\n	2. having the option to buy\n",['1','2']),
+			("29. In company do you:\n	1. initiate conversation\n	2. wait to be approached\n",['1','2']),
+			("30. Common sense is:\n	1. rarely questionable\n	2. frequently questionable\n",['1','2']),
+			("31. Children often do not:\n	1. make themselves useful enough\n	2. exercise their fantasy enough\n",['1','2']),
+			("32. In making decisions do you feel more comfortable with:\n	1. standards\n	2. feelings\n",['1','2']),
+			("33. Are you more:\n	1. firm than gentle\n	2. gentle than firm\n",['1','2']),
+			("34. Which is more admirable:\n	1. the ability to organize and be methodical\n	2. the ability to adapt and make do\n",['1','2']),
+			("35. Do you put more value on:\n	1. infinite\n	2. open-minded\n",['1','2']),
+			("36. Does new and non-routine interaction with others:\n	1. stimulate and energize you\n	2. tax your reserves\n",['1','2']),
+			("37. Are you more frequently:\n	1. a practical sort of person\n	2. a fanciful sort of person\n",['1','2']),
+			("38. Are you more likely to:\n	1. see how others are useful\n	2. see how others see\n",['1','2']),
+			("39. Which is more satisfying:\n	1. to discuss an issue throughly\n	2. to arrive at agreement on an issue\n",['1','2']),
+			("40. Which rules you more:\n	1. your head\n	2. your heart\n",['1','2']),
+			("41. Are you more comfortable with work that is:\n	1. contracted\n	2. done on a casual basis\n",['1','2']),
+			("42. Do you tend to look for:\n	1. the orderly\n	2. whatever turns up\n",['1','2']),
+			("43. Do you prefer:\n	1. many friends with brief contact\n	2. a few friends with more lengthy contact\n",['1','2']),
+			("44. Do you go more by:\n	1. facts\n	2. principles\n",['1','2']),
+			("45. Are you more interested in:\n	1. production and distribution\n	2. design and research\n",['1','2']),
+			("46. Which is more of a compliment:\n	1. “There is a very logical person.”\n	2. “There is a very sentimental person.”\n",['1','2']),
+			("47. Do you value in yourself more that you are:\n	1. unwavering\n	2. devoted\n",['1','2']),
+			("48. Do you more often prefer the\n	1. final and unalterable statement\n	2. tentative and preliminary statement\n",['1','2']),
+			("49. Are you more comfortable:\n	1. after a decision\n	2. before a decision\n",['1','2']),
+			("50. Do you:\n	1. speak easily and at length with strangers\n	2. find little to say to strangers\n",['1','2']),
+			("51. Are you more likely to trust your:\n	1. experience\n	2. hunch\n",['1','2']),
+			("52. Do you feel:\n	1. more practical than ingenious\n	2. more ingenious than practical\n",['1','2']),
+			("53. Which person is more to be complimented  - one of:\n	1. clear reason\n	2. strong feeling\n",['1','2']),
+			("54. Are you inclined more to be:\n	1. fair-minded\n	2. sympathetic\n",['1','2']),
+			("55. Is it preferable mostly to:\n	1. make sure things are arranged\n	2. just let things happen\n",['1','2']),
+			("56. In relationships should most things be:\n	1. re-negotiable\n	2. random and circumstantial\n",['1','2']),
+			("57. When the phone rings do you:\n	1. hasten to get to it first\n	2. hope someone else will answer\n",['1','2']),
+			("58. Do you prize more in yourself:\n	1. a strong sense of reality\n	2. a vivid imagination\n",['1','2']),
+			("59. Are you drawn more to:\n	1. fundamentals\n	2. overtones\n",['1','2']),
+			("60. Which seems the greater error:\n	1. to be too passionate\n	2. to be too objective\n",['1','2']),
+			("61. Do you see yourself as basically:\n	1. hard-headed\n	2. soft-hearted\n",['1','2']),
+			("62. Which situation appeals to you more:\n	1. the structured and scheduled\n	2. the unstructured and unscheduled\n",['1','2']),
+			("63. Are you a person that is more:\n	1. routinized than whimsical\n	2. whimsical than routinized\n",['1','2']),
+			("64. Are you more inclined to be:\n	1. easy to approach\n	2. somewhat reserved\n",['1','2']),
+			("65. In writings do you prefer:\n	1. the more literal\n	2. the more figurative\n",['1','2']),
+			("66. Is it harder for you to:\n	1. identify with others\n	2. utilize others\n",['1','2']),
+			("67. Which do you wish more for yourself:\n	1. clarity of reason\n	2. strength of compassion\n",['1','2']),
+			("68. Which is the greater fault:\n	1. being indiscriminate\n	2. being critical\n",['1','2']),
+			("69. Do you prefer the:\n	1. planned event\n	2. unplanned event\n",['1','2']),
+			("70. Do you tend to be more:\n	1. deliberate than spontaneous\n	2. spontaneous than deliberate\n",['1','2'])
         ]
 
     def evaluate(self, answers: list[str]):
         '''
-        Evaluates the answers to the mini personality test.
+        Evaluates the answers to the mbti personality test.
         '''
-
-        return answers.count('1') / 10
+        ans = [0,0,0,0] # which stand for Extraverted, Sensing, Thinking, Judging
+        for i in range(70):
+            if ((i+1)%7 == 1) and (answers[i] == 1):
+                ans[0] += 0.1
+            elif ((i+1)%7 == 2 or (i+1)%7 == 3) and (answers[i] == 1):
+                ans[1] += 0.05
+            elif ((i+1)%7 == 4 or (i+1)%7 == 5) and (answers[i] == 1):
+                ans[2] += 0.05
+            elif ((i+1)%7 == 6 or (i+1)%7 == 0) and (answers[i] == 1):
+                ans[3] += 0.05
+            else: pass
+        return ans
 
 
 class IPIP_BFFM(Eval):
