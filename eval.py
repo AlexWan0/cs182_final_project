@@ -61,9 +61,9 @@ prompts = {
 
 tests = [
     # 'MiniExtroversionTest',
-    'IPIP_BFFM',
-    'Sociotype'
-    # 'MBTI_Extroversion'
+    # 'IPIP_BFFM',
+    # 'Sociotype'
+    'MBTI_Extroversion'
 ]
 
 paths = glob.glob('runs/*/checkpoint-*/style_adapter')
@@ -73,7 +73,7 @@ if __name__ == '__main__':
 
     total = len(paths) * len(tests) * len(prompts.keys())
 
-    with open('results.csv', 'w', buffering=1) as f:
+    with open('results.csv', 'a+', buffering=1) as f:
         for path, test, prompt_name in tqdm(product(paths, tests, prompts.keys()), total=total):
             prompt = prompts[prompt_name]
 

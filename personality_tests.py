@@ -140,13 +140,13 @@ class MBTI_Extroversion(Eval):
         '''
         ans = [0,0,0,0] # which stand for Extraverted, Sensing, Thinking, Judging
         for i in range(70):
-            if ((i+1)%7 == 1) and (answers[i] == 1):
+            if ((i+1)%7 == 1) and (answers[i] == '1'):
                 ans[0] += 0.1
-            elif ((i+1)%7 == 2 or (i+1)%7 == 3) and (answers[i] == 1):
+            elif ((i+1)%7 == 2 or (i+1)%7 == 3) and (answers[i] == '1'):
                 ans[1] += 0.05
-            elif ((i+1)%7 == 4 or (i+1)%7 == 5) and (answers[i] == 1):
+            elif ((i+1)%7 == 4 or (i+1)%7 == 5) and (answers[i] == '1'):
                 ans[2] += 0.05
-            elif ((i+1)%7 == 6 or (i+1)%7 == 0) and (answers[i] == 1):
+            elif ((i+1)%7 == 6 or (i+1)%7 == 0) and (answers[i] == '1'):
                 ans[3] += 0.05
             else: pass
         return ans
