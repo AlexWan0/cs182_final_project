@@ -61,8 +61,8 @@ prompts = {
 
 tests = [
     # 'MiniExtroversionTest',
-    # 'IPIP_BFFM',
-    # 'Sociotype'
+    'IPIP_BFFM',
+    'Sociotype'
     'MBTI_Extroversion'
 ]
 

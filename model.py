@@ -145,29 +145,29 @@ class StyleModel():
 if __name__ == '__main__':
     hyperparams = {
         'lr': [1e-4, 5e-4, 1e-3],
+        'dset': ['RedditData', 'NewsData', 'TweetData']
     }
 
-    for lr in hyperparams['lr']:
-        model_args = ModelArgs(
-            model_name='gpt2',
-            is_mlm=False,
-            lora_r=16,
-            lora_alpha=8
-        )
+    for dataset_name in hyperparams['dset']:
+        for lr in hyperparams['lr']:
+            model_args = ModelArgs(
+                model_name='gpt2',
+                is_mlm=False,
+                lora_r=16,
+                lora_alpha=8
+            )
 
-        training_args = TrainingArgs(
-            epochs=10,
-            batch_size=8,
-            learning_rate=lr
-        )
+            training_args = TrainingArgs(
+                epochs=10,
+                batch_size=8,
+                learning_rate=lr
+            )
 
-        dataset_name = 'RedditData'
+            model = StyleModel(
+                model_args,
+                dataset_name=dataset_name,
+                training_args=training_args
+            )
 
-        model = StyleModel(
-            model_args,
-            dataset_name=dataset_name,
-            training_args=training_args
-        )
-
-        model.load_data()
-        model.train()
+            model.load_data()
+            model.train()
