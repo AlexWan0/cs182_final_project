@@ -149,6 +149,9 @@ if __name__ == '__main__':
         'dset': ['RedditData', 'NewsData', 'TweetData']
     }
     
+    if not os.path.exists('runs'):
+        os.mkdir('runs')
+
     DO_LR_SWEEP = False
     DO_R_SWEEP = False
     DEBUG = True
@@ -162,8 +165,8 @@ if __name__ == '__main__':
         )
 
         training_args = TrainingArgs(
-            epochs=10,
-            batch_size=8,
+            epochs=2,
+            batch_size=2,
             learning_rate=1e-4
         )
 
@@ -175,6 +178,7 @@ if __name__ == '__main__':
 
         model.load_data()
         model.train()
+
 
     if DO_LR_SWEEP:
         for dataset_name in hyperparams['dset']:
