@@ -52,17 +52,20 @@ def run_ptest(
 
 # params
 prompts = {
-    'qa': 'Question: {question}\nAnswer: {answer}',
-    'basic': '{question} {answer}',
-    'personality_test': 'Here\'s my answer to a personality test:\nQuestion: {question}\nAnswer: {answer}',
-    'personality_test_basic': 'Here\'s my answer to a personality test:\n{question} {answer}',
-    'qa2': 'Q: {question}\nA: {answer}'
+    # 'qa': 'Question: {question}\nAnswer: {answer}',
+    # 'basic': '{question} {answer}',
+    # 'personality_test': 'Here\'s my answer to a personality test:\nQuestion: {question}\nAnswer: {answer}',
+    # 'personality_test_basic': 'Here\'s my answer to a personality test:\n{question} {answer}',
+    # 'qa2': 'Q: {question}\nA: {answer}',
+    'qa_demographic_1': 'I\'m a 24-year-old female from the Midwest. Q: {question}\nA: {answer}',
+    'qa_demographic_2': 'I\'m a 62-year-old female from the Midwest. Q: {question}\nA: {answer}',
+    'qa_demographic_3': 'I\'m a 24-year-old female from the South. I make over $100k a year. I am an American citizen. Q: {question}\nA: {answer}'
 }
 
 tests = [
     # 'MiniExtroversionTest',
-    'IPIP_BFFM',
-    'Sociotype'
+    # 'IPIP_BFFM',
+    # 'Sociotype'
     'MBTI_Extroversion'
 ]
 
@@ -76,6 +79,9 @@ if __name__ == '__main__':
     with open('results.csv', 'a+', buffering=1) as f:
         for path, test, prompt_name in tqdm(product(paths, tests, prompts.keys()), total=total):
             prompt = prompts[prompt_name]
+
+            if '1510' not in path or 'TweetData' not in path:
+                continue
 
             model_args = ModelArgs(
                 model_name='gpt2',
