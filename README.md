@@ -9,6 +9,8 @@ Then, create the conda environment:
 conda env create -f environment.yml
 ```
 
+Note that CUDA is required to run these experiments.
+
 # Training
 To run with the full hyperparameter sweep (i.e., epochs, LR, and datasets), simply run:
 ```bash
