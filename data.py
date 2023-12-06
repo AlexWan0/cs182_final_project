@@ -42,13 +42,13 @@ class TweetDataMini(RawData):
         self.tweets = load_dataset("tweet_eval", "sentiment")
 
     def get_train_data(self):
-        return self.tweets['train']['text'][:32]
+        return self.tweets['train']['text'][:1024]
 
     def get_validation_data(self):
-        return self.tweets['validation']['text'][:32]
+        return self.tweets['validation']['text'][:1024]
 
     def get_test_data(self):
-        return self.tweets['test']['text'][:32]
+        return self.tweets['test']['text'][:1024]
 
 class NewsData(RawData):
     def __init__(self):
