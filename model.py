@@ -150,8 +150,31 @@ if __name__ == '__main__':
     }
     
     DO_LR_SWEEP = False
-    DO_R_SWEEP = True
+    DO_R_SWEEP = False
+    DEBUG = True
 
+    if DEBUG:
+        model_args = ModelArgs(
+            model_name='gpt2',
+            is_mlm=False,
+            lora_r=2,
+            lora_alpha=2
+        )
+
+        training_args = TrainingArgs(
+            epochs=10,
+            batch_size=8,
+            learning_rate=1e-4
+        )
+
+        model = StyleModel(
+            model_args,
+            dataset_name='TweetDataMini',
+            training_args=training_args
+        )
+
+        model.load_data()
+        model.train()
 
     if DO_LR_SWEEP:
         for dataset_name in hyperparams['dset']:

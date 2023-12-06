@@ -37,6 +37,19 @@ class TweetData(RawData):
     def get_test_data(self):
         return self.tweets['test']['text']
 
+class TweetDataMini(RawData):
+    def __init__(self):
+        self.tweets = load_dataset("tweet_eval", "sentiment")
+
+    def get_train_data(self):
+        return self.tweets['train']['text'][:32]
+
+    def get_validation_data(self):
+        return self.tweets['validation']['text'][:32]
+
+    def get_test_data(self):
+        return self.tweets['test']['text'][:32]
+
 class NewsData(RawData):
     def __init__(self):
         raw_dataset = load_dataset('ag_news')
@@ -106,6 +119,7 @@ class RedditData(RawData):
 
 dataset_classes: dict[str, RawData] = {
     'TweetData': TweetData,
+    'TweetDataMini': TweetDataMini,
     'NewsData': NewsData,
     'CommentData': CommentData,
     'RedditData': RedditData
