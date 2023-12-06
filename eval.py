@@ -80,9 +80,6 @@ if __name__ == '__main__':
         for path, test, prompt_name in tqdm(product(paths, tests, prompts.keys()), total=total):
             prompt = prompts[prompt_name]
 
-            if '1510' not in path or 'TweetData' not in path:
-                continue
-
             model_args = ModelArgs(
                 model_name='gpt2',
                 is_mlm=False,
