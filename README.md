@@ -1,7 +1,7 @@
 # Training
 To run with the full hyperparameter sweep (i.e., epochs, LR, and datasets), simply run:
 ```bash
-python main.py
+python model.py
 ```
 
 # Evaluate
