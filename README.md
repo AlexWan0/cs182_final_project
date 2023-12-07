@@ -6,6 +6,7 @@ git clone https://github.com/AlexWan0/cs182_final_project.git
 
 Then, create the conda environment:
 ```bash
+cd cs182_final_project/
 conda env create -f environment.yml
 ```
 
