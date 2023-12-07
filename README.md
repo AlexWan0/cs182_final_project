@@ -25,5 +25,10 @@ To run the entire set of psychometric tests, simply run:
 python eval.py
 ```
 
+The full set of 160 checkpoints is unfortunately too cost-prohibitive to distribute (and impractical for reviewers/graders to run). We instead distribute a subset of these checkpoints. We additionally provide a Colab notebook to run these checkpoints.
+
+The checkpoints can be found here.
+The Colab notebook can be found here (make sure the GPU runtime is enabled).
+
 # Plots
 The plots can be reproduced using the `plots.ipynb` and `lossplots.ipynb` notebooks.
